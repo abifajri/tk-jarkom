@@ -15,7 +15,7 @@ def recv_word_counter(s):
         if new_data:
             # print("new msg len:",data[:HEADERSIZE])
             data_len = int(data[:HEADERSIZE])
-            print(data_len)
+            # print(data_len)
             new_data = False
 
         # print(f"full message length: {data_len}")

@@ -1,14 +1,13 @@
-import socket, time
+import socket
 
 # HOST = "ec2-3-86-27-100.compute-1.amazonaws.com"
 HOST = "127.0.0.1"
 PORT = 8888
 
-HEADERSIZE = 99
-
+HEADERSIZE = 10
 files = []
 numf = input("Jumlah file: ")
-print("Nama File(s):")
+print("Nama File(s):\n")
 for i in range(int(numf)):
     files.append(input())
 
@@ -43,16 +42,17 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
     # f1 = open("data_small.txt", "r")
     # l1 = f1.read()
     # l_len = str(len(l)).encode()
+    l = 0
     full = ""
     for f in files:
         txt = open(f,"r")
         r = txt.read()
+        l += len(r)
         full += r
 
-    msg = f"{len(full):<{HEADERSIZE}}"+ full
+    msg = f"{l:<{HEADERSIZE}}"+ full
     s.send(bytes(msg,"utf-8"))
 
-    print("-----")
     recv_word_counter(s) # print running state
     recv_word_counter(s) # print result / finished state
 
